@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'kotlin'
+    id 'maven-publish'
 }
 
 java {
@@ -10,4 +11,16 @@ java {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.javalon.roomie'
+                artifactId = 'core'
+                version = '1.0.0'
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'kotlin'
+    id 'maven-publish'
 }
 
 java {
@@ -14,4 +15,16 @@ dependencies {
     implementation project(path: ':roomie-annotation')
     implementation 'com.squareup:kotlinpoet:1.4.4'
     implementation 'com.google.code.gson:gson:2.9.0'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.javalon.roomie'
+                artifactId = 'generator'
+                version = '1.0.0'
+            }
+        }
+    }
 }
