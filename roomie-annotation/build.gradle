@@ -17,7 +17,7 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                groupId = 'com.javalon.roomie'
+                groupId = 'com.roomie'
                 artifactId = 'core'
                 version = '1.0.0'
             }
