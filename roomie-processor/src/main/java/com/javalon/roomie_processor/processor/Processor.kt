@@ -37,7 +37,7 @@ class Processor: AbstractProcessor() {
     }
 
     override fun process(p0: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment?): Boolean {
-       val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_HOME_NAME]
+       val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
            ?: return false
 
        roundEnv?.getElementsAnnotatedWith(AddConverter::class.java)?.forEach {
@@ -76,6 +76,6 @@ class Processor: AbstractProcessor() {
     }
 
     companion object {
-        const val KAPT_KOTLIN_GENERATED_HOME_NAME = "kapt.kotlin.generated"
+        const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
     }
 }
