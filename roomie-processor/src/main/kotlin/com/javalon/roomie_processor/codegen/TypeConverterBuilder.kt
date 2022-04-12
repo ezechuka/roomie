@@ -1,22 +1,23 @@
 package com.javalon.roomie_processor.codegen
 
 import com.google.gson.Gson
-import com.javalon.roomie_processor.model.ConverterData
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
 class TypeConverterBuilder(
-    private val data: ConverterData,
-    private val fileName: String = String()
+    private val packageName: String,
+    private val modelName: String,
+    private val fileName: String = String(),
+    private val asList: Boolean = false
 ) {
-    private val modelClassName = ClassName(data.packageName, data.modelName)
+    private val modelClassName = ClassName(packageName, modelName)
     private val typeTokenInterfaceName = ClassName("com.google.gson.reflect", "TypeToken")
-    private val itemsListClassName = ClassName("kotlin.collections", "List")
+    private val converterTypeListClassName = ClassName("kotlin.collections", "List")
         .parameterizedBy(modelClassName)
     private val typeConverterClassName = ClassName("androidx.room", "TypeConverter")
 
     fun build(): TypeSpec = if (fileName.isEmpty()) {
-        TypeSpec.classBuilder("${data.modelName}Converter")
+        TypeSpec.classBuilder("${modelName}Converter")
             .addModifiers(KModifier.OPEN)
             .addBaseMethods()
             .build()
@@ -30,15 +31,28 @@ class TypeConverterBuilder(
     private fun TypeSpec.Builder.addBaseMethods(): TypeSpec.Builder = apply {
         addFunction(
             FunSpec.builder("fromString")
-            .addAnnotation(typeConverterClassName)
-                .returns(itemsListClassName)
+                .addAnnotation(typeConverterClassName)
+                .returns(
+                    if (asList)
+                        converterTypeListClassName
+                    else modelClassName
+                )
                 .addParameter("value", String::class)
                 .addStatement(
                     "val type = object : %T<%T>() {}.type",
                     typeTokenInterfaceName,
-                    itemsListClassName
+                    if (asList)
+                        converterTypeListClassName
+                    else modelClassName,
                 )
-                .addStatement("return %T().fromJson<%T>(value, type)", Gson::class, itemsListClassName)
+                .addStatement(
+                    "return %T().fromJson<%T>(value, type)",
+                    Gson::class,
+                    if (asList)
+                        converterTypeListClassName
+                    else
+                        modelClassName
+                )
                 .build()
         )
 
@@ -46,9 +60,9 @@ class TypeConverterBuilder(
             FunSpec.builder("fromList")
                 .addAnnotation(typeConverterClassName)
                 .returns(String::class)
-                .addParameter("list", itemsListClassName)
+                .addParameter("value", if (asList) converterTypeListClassName else modelClassName)
                 .addStatement("val gson = %T()", Gson::class)
-                .addStatement("return gson.toJson(list)")
+                .addStatement("return gson.toJson(value)")
                 .build()
         )
     }

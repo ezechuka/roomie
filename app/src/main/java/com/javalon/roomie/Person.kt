@@ -1,3 +1,6 @@
 package com.javalon.roomie
 
-data class Person()
+import com.javalon.AddConverter
+
+//@AddConverter(name = "PeopleConverter")
+//data class Person(val firstName: String, val lastName: List<String>)

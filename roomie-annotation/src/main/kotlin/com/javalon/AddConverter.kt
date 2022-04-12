@@ -1,4 +1,4 @@
-package com.javalon.roomie_annotation
+package com.javalon
 
 /**
  * Automatically generates a TypeConverter
@@ -6,4 +6,4 @@ package com.javalon.roomie_annotation
  */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
-annotation class AddConverter(val name: String = "")
+annotation class AddConverter(val name: String = "", val asList: Boolean = false)

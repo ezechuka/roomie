@@ -1,4 +1,0 @@
-rootProject.name = "Roomie"
-include ':app'
-include ':roomie-processor'
-include ':roomie-annotation'
