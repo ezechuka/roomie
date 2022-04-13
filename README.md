@@ -6,7 +6,7 @@
 Roomie is an annotation processing library that utilizes KSP to generate TypeConverter classes for Room. TypeConverter classes most often involve same boiler-plate code and Roomie makes it really easy to quickly create them with a single annotation.
 
 ## Usage
-### Annotate the model class you want to generate a TypeConverter for using ```@AddConverter```
+### Annotate the specific model class using ```@AddConverter```
 ```
 @AddConverter
 data class Person(val firstName: String, val lastName: String)
@@ -23,6 +23,48 @@ By default, the generated converter has **Converter** appended to its name but i
 data class Person(val firstName: String, val lastName: String)
 ```
 This will generate the converter using ```PeopleConverter``` as its name.
+
+### Working with lists
+By default, the generated converter class will be similar to the code below:
+```
+open class PersonConverter {
+  @TypeConverter
+  fun fromString(value: String): Person {
+    val type = object : TypeToken<Person>() {}.type
+    return Gson().fromJson<Person>(value, type)
+  }
+
+  @TypeConverter
+  fun fromList(value: Person): String {
+    val gson = Gson()
+    return gson.toJson(value)
+  }
+}
+
+```
+In certain cases you may want to wrap the model class with a kotlin list. This can be achieved by using the ```asList``` argument which takes a boolean specified in ```@AddConverter``` annotation, which by default is ```false```.
+
+```
+@AddConverter(asList = true)
+data class Person(val firstName: String, val lastName: String)
+```
+The resulting generated converter class is shown below:
+```
+open class PersonListConverter {
+  @TypeConverter
+  fun fromString(value: String): List<Person> {
+    val type = object : TypeToken<List<Person>>() {}.type
+    return Gson().fromJson<List<Person>>(value, type)
+  }
+
+  @TypeConverter
+  fun fromList(value: List<Person>): String {
+    val gson = Gson()
+    return gson.toJson(value)
+  }
+}
+```
+* In this case the resulting converter class now has ```ListConverter``` appended to its name. To get the corresponding converter class when ```asList``` is set to ```true``` append ```ListConverter``` to its name, as in [Model name]ListConverter.
 
 ## Download
 [![JitPack](https://img.shields.io/jitpack/v/github/ezechuka/roomie?color=%2346C018&style=for-the-badge)](https://jitpack.io/#ezechuka/roomie/)
