@@ -6,23 +6,23 @@
 Roomie is an annotation processing library that utilizes KSP to generate TypeConverter classes for Room. TypeConverter classes most often involve same boiler-plate code and Roomie makes it really easy to quickly create them with a single annotation.
 
 ## Usage
-* #### Annotate the model class you want to generate a TypeConverter for using: ```@AddConverter```
-    ```
-    @AddConverter
-    data class Person(val firstName: String, val lastName: String)
-    ```
+### Annotate the model class you want to generate a TypeConverter for using ```@AddConverter```
+```
+@AddConverter
+data class Person(val firstName: String, val lastName: String)
+```
 
-    It's as simple as that! 
-    Rebuild the project to generate the Converter. A converter class with the name ```PersonConverter``` will be generated for the ```Person``` data class     above.
-    In your case use [Model name]Converter to get the corresponding converter for your data class.
+It's as simple as that! 
+Rebuild the project to generate the converter. A converter class with the name ```PersonConverter``` will be generated for the ```Person``` data class     above.
+In your case, use [Model name]Converter to get the corresponding converter for your data class.
 
-* #### Specifying converter name
-    By default, the generated converter has **Converter** appended to its name but it can be changed by using the ```name``` argument specified in             ```@AddConverter``` annotation.
-    ```
-    @AddConverter(name = "PeopleConverter")
-    data class Person(val firstName: String, val lastName: String)
-    ```
-    This will will generate the converter using ```PeopleConverter``` as its name.
+### Specifying converter name
+By default, the generated converter has **Converter** appended to its name but it can be changed by using the ```name``` argument specified in             ```@AddConverter``` annotation.
+```
+@AddConverter(name = "PeopleConverter")
+data class Person(val firstName: String, val lastName: String)
+```
+This will generate the converter using ```PeopleConverter``` as its name.
 
 ## Download
 [![JitPack](https://img.shields.io/jitpack/v/github/ezechuka/roomie?color=%2346C018&style=for-the-badge)](https://jitpack.io/#ezechuka/roomie/)
