@@ -105,7 +105,7 @@ implementation("com.github.ezechuka.roomie:roomie-annotation:1.0.0-beta02")
 ksp("com.github.ezechuka.roomie:roomie-processor:1.0.0-beta02")
 ```
 
-**Also [Room](https://developer.android.com/jetpack/androidx/releases/room#declaring_dependencies) and [Gson](https://github.com/google/gson) needs to be included in the build.gradle (module level)**
+**Also [Room](https://developer.android.com/jetpack/androidx/releases/room#declaring_dependencies) and [Gson](https://github.com/google/gson) needs to be included in the build.gradle (module level) for Groovy or build.gradle.kts (module level) for Kotlin**
 
 ### 3. Specify build generated folder to IDE
 Within the ```android``` block add:
