@@ -40,7 +40,6 @@ open class PersonConverter {
     return gson.toJson(value)
   }
 }
-
 ```
 In certain cases you may want to wrap the model class with a kotlin list. This can be achieved by using the ```asList``` argument which takes a boolean specified in ```@AddConverter``` annotation, which by default is ```false```.
 
@@ -69,7 +68,24 @@ open class PersonListConverter {
 ## Download
 [![JitPack](https://img.shields.io/jitpack/v/github/ezechuka/roomie?color=%2346C018&style=for-the-badge)](https://jitpack.io/#ezechuka/roomie/)
 
-### 1. Add the KSP plugin:
+### 1. Add the JitPack repository to your project
+**groovy - settings.gradle (project level)**
+```
+repositories {
+    google()
+    mavenCentral()
+    jcenter() // Warning: this repository is going to shut down soon
+    maven { url 'https://jitpack.io' }
+  }
+```
+**kotlin - setting.gradle.kts**
+```
+repositories {
+  maven { url = uri("https://www.jitpack.io" ) }
+}
+```
+
+### 2. Add the KSP plugin:
     
 > The version you chose for the KSP plugin depends on the Kotlin version your project uses. <br>
 You can check https://github.com/google/ksp/releases for the list of KSP versions, then pick the last release that matches your Kotlin version.  
@@ -91,7 +107,7 @@ plugins {
 }
 ```
     
-### 2. Add depedencies:
+### 3. Add depedencies:
 
 **groovy - build.gradle (module level)**
 ```gradle
@@ -107,7 +123,7 @@ ksp("com.github.ezechuka.roomie:roomie-processor:1.0.0-beta02")
 
 **Also [Room](https://developer.android.com/jetpack/androidx/releases/room#declaring_dependencies) and [Gson](https://github.com/google/gson) needs to be included in the build.gradle (module level) for Groovy or build.gradle.kts (module level) for Kotlin**
 
-### 3. Specify build generated folder to IDE
+### 4. Specify build generated folder to IDE
 Within the ```android``` block add:
 
 **groovy - build.gradle (module level)**
